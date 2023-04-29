@@ -14,13 +14,12 @@ import br.com.guifroes.mvc.mudi.repository.PedidoRepositoy;
 public class HomeController {
 	
 	@Autowired
-	private PedidoRepositoy repositoy;
+	private PedidoRepositoy pedidoRepositoy;
 
 	@GetMapping("/home")
 	public String home(Model model) {
-		List<Pedido> pedidos = repositoy.recuperaTodosOsPedidos();
+		List<Pedido> pedidos = pedidoRepositoy.findAll();
 		model.addAttribute("pedidos", pedidos);
-
 		return "home";
 	}
 
