@@ -1,11 +1,18 @@
 package br.com.guifroes.mvc.mudi.dto;
 
+import javax.validation.constraints.NotBlank;
+
 import br.com.guifroes.mvc.mudi.model.Pedido;
 
 public class RequisicaoNovoPedido {
-
+	
+	@NotBlank
 	private String nomeProduto;
+	
+	@NotBlank
 	private String urlProduto;
+	
+	@NotBlank
 	private String urlImagem;
 	private String descricao;
 
