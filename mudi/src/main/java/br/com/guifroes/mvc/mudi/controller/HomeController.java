@@ -24,7 +24,7 @@ public class HomeController {
 
 	@GetMapping
 	public String home(Model model, Principal principal) {
-		Sort sort = Sort.by("dataEntrega").ascending();
+		Sort sort = Sort.by("dataEntrega").descending();
 		PageRequest paginacao = PageRequest.of(0, 10, sort);
 		
 		List<Pedido> pedidos = pedidoRepositoy.findByStatus(StatusPedido.ENTREGUE, paginacao);
