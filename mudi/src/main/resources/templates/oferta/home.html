@@ -1,39 +1,72 @@
 <html>
 	<head th:replace="~{base :: head}"></head>
-	<body>
+	<body onload="onLoad()">
 	
 		<div th:replace="~{base :: logo}"></div>
 		
-		<div class="container">
-			<div th:replace="~{base :: titulo('Últimos pedidos')}"></div>
+		<div class="container" id="ofertas">
+			<div th:replace="~{base :: titulo('Faça suas Ofertas')}"></div>
 			
-			<div class="card mb-3" th:each="pedido : ${pedidos}">
-				<div class="card-header alert-dark" th:text="${pedido.nomeProduto}">Nome do produto</div>
+			<div class="card mb-3" v-for="pedido in pedidos">
+				<div class="card-header alert-dark">{{pedido.nomeProduto}}</div>
 				
 				<div class="card-body">
 						<div class="row">
 							<div class="col-12 col-sm-8 mb-3">
 								<div class="row">
-									<div class="col-md-7">Valor: <span th:if="${pedido.valorNegociado} != null" th:text=" ${'R$ ' + #numbers.arrayFormatDecimal(pedido.valorNegociado,3,'POINT',2,'COMMA')}">200,99</span></div>
-									<div class="col-md-5">Data da entrega: <span th:text="${#temporals.format(pedido.dataEntrega, 'dd/MM/yyyy')}">10/02/2020</span></div>
+									<div class="col-md-5">Valor: <input /></div>
+									<div class="col-md-7">Data da entrega: <input /></div>
 								</div>
 								
 								<div>Produto</div>
-								<div> <input class="form-control" th:value="${pedido.urlProduto}" value="url do produto"/></div>
+								<div> <a v-bind:href="pedido.urlProduto">{{pedido.nomeProduto}}</a></div>
 								
 								<div>Descrição</div>
 								<div>
-									<textarea class="form-control" th:text="${pedido.descricao}">descrição do pedido</textarea>
+									<textarea class="form-control">{{pedido.descricao}}</textarea>
 								</div>
 							</div>
 							<div class="col-12 col-sm-4">
 							<div>
-								<img class="img-thumbnail" th:src="${pedido.UrlImagem}" src=""/>
+								<img class="img-thumbnail" v-bind:src="pedido.urlImagem"/>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+		<script>
+			
+			function onLoad() {
+				var app = new Vue(
+					{
+						el : '#ofertas',
+						data : {
+							pedidos : [
+								{
+									"id" : 9,
+									"nomeProduto" : "Celular Xiaomi Redmi Note 12",
+									"valorNegociado" : null,
+									"dataEntrega" : null,
+									"urlProduto" : "https://www.amazon.com.br/Celular-Xiaomi-Redmi-128GB-TelaP/dp/B0BZ7R2MPQ/ref=sr_1_1?crid=3TME3HKTGDLUV&keywords=celular+xiaomi+12&qid=1682989813&sprefix=celular+xiaomi+12%2Caps%2C831&sr=8-1&ufe=app_do%3Aamzn1.fos.25548f35-0de7-44b3-b28e-0f56f3f96147",
+									"descricao" : "Descrição Celular Xiaomi",
+									"status" : "AGUARDANDO",
+									"urlImagem" : "https://m.media-amazon.com/images/I/41UQySSm1eL._AC_SX679_.jpg"
+								},
+								{
+									"id" : 8,
+									"nomeProduto" : "Vitrola Vintage",
+									"valorNegociado" : null,
+									"dataEntrega" : null,
+									"urlProduto" : "https://www.amazon.com.br/Toca-discos-velocidades-reproduzem-auxiliares-tecnologia/dp/B08NFHTYXQ/ref=sr_1_1?keywords=vitrola+vintage&qid=1682952408&sprefix=vitrola+vi%2Caps%2C315&sr=8-1&ufe=app_do%3Aamzn1.fos.25548f35-0de7-44b3-b28e-0f56f3f96147",
+									"descricao" : "Vitrola Spazio com Toca-discos de 3 velocidades conexão Bluetooth",
+									"status" : "AGUARDANDO",
+									"urlImagem" : "https://m.media-amazon.com/images/I/61n8LAB7ixS._AC_SL1000_.jpg"
+								} ]
+						}
+					});
+			}
+		</script>
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 	</body>
 </html>
