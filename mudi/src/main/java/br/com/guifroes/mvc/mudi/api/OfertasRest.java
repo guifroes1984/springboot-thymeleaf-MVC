@@ -2,6 +2,8 @@ package br.com.guifroes.mvc.mudi.api;
 
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,7 +23,7 @@ public class OfertasRest {
 	private PedidoRepositoy pedidoRepositoy;
 	
 	@PostMapping
-	public Oferta criaOferta(@RequestBody RequisicaoNovaOferta requisicao) {
+	public Oferta criaOferta(@Valid @RequestBody RequisicaoNovaOferta requisicao) {
 		Optional<Pedido> pedidoBuscado = pedidoRepositoy.findById(requisicao.getPedidoId());
 		if (!pedidoBuscado.isPresent()) {
 			return null;

@@ -41,38 +41,38 @@
 			</div>
 		</div>
 		<script>
-			function onLoad() {
-				var app = new Vue(
-					{
-						el : '#ofertas',
-						data : {
-							pedidos : []
-						}, 
-						mounted () {
+		function onLoad() {
+			var app = new Vue(
+				{
+					el : '#ofertas',
+					data : {
+						pedidos : []
+					}, 
+					mounted () {
+						axios
+					      .get('http://localhost:8080/api/pedidos/aguardando')
+					      .then(response => {
+					    	  	response.data.forEach(pedido => pedido.ofertaEnviada = false)
+					    	  	this.pedidos = response.data
+				    	   })
+					}, 
+					methods: {
+						enviarOferta: function(pedido) {
 							axios
-						      .get('http://localhost:8080/api/pedidos/aguardando')
-						      .then(response => {
-						    	  	response.data.forEach(pedido => pedido.ofertaEnviada = false)
-						    	  	this.pedidos = response.data
-						    	})
-						}, 
-						methods: {
-							enviarOferta: function(pedido) {
-								axios
-							      .post('http://localhost:8080/api/ofertas', {
-							    	  pedidoId: pedido.id,
-							    	  valor: pedido.valorNegociado,
-							    	  dataDaEntrega: pedido.dataDaEntrega,
-							    	  comentario: pedido.comentario
-							    	  
-							      })
-							      .then(response => pedido.ofertaEnviada = true);
-							}
+						      .post('http://localhost:8080/api/ofertas', {
+						    	  pedidoId: pedido.id,
+						    	  valor: pedido.valorNegociado,
+						    	  dataDaEntrega: pedido.dataDaEntrega,
+						    	  comentario: pedido.comentario
+						    	  
+						      })
+						      .then(response => pedido.ofertaEnviada = true);
 						}
-					});
+					}
+				});
 			}
 		</script>
 		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-		<script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
+		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 	</body>
 </html>
